@@ -93,4 +93,13 @@ $(function() {
     }
 
     setInterval(exec, 100);
+
+    var key_down = function(ev) {
+        if(ev.key == "d"){
+            console.log("asdf");
+        } else if(ev.key == "a") {
+            console.log("asdf");
+        }
+    }
+    $("#can").keydown(key_down);
 });
