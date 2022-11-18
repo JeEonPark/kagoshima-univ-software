@@ -69,6 +69,10 @@ $(function() {
         changeCostume() {
             this.costume++;
         }
+
+        move(dx) {
+            this.x += dx;
+        }
     }
 
     //About Message
@@ -78,18 +82,26 @@ $(function() {
 
     //When key down
     var keyDown = function() {
-        console.log(ev.)
+        switch(ev.which) {
+            case 37: key_l = true; break;
+            case 39: key_r = true; break;
+        }
     }
 
     //When key up
     var keyUp = function() {
-        
+        switch(ev.which) {
+            case 37: key_l = false; break;
+            case 39: key_r = false; break;
+        }
     }
 
     var can = $("#can");
     var ctx = can[0].getContext("2d");
     var gra = new Graph(ctx);
     var df = new Dragonfly(320, 420);
+    var key_l = false;
+    var key_r = false;
 
     //Event Handler
     $("#bt_about").click(showAboutMessage);
@@ -100,11 +112,13 @@ $(function() {
     var exec = function() {
         gra.clear();
         df.draw(gra);
+        if(key_l) df.move(-4);
+        if(key_r) df.move(4);
         df.changeCostume();
         lap++;
     }
 
+    can.attr("tabindex", 0);
     setInterval(exec, 100);
-
     
 });
