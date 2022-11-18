@@ -76,13 +76,25 @@ $(function() {
         alert("トンボゲーム\n2022\nSoftware Engineering II");
     }
 
-    //Event Handler
-    $("#bt_about").click(showAboutMessage);
+    //When key down
+    var keyDown = function() {
+        console.log(ev.)
+    }
+
+    //When key up
+    var keyUp = function() {
+        
+    }
 
     var can = $("#can");
     var ctx = can[0].getContext("2d");
     var gra = new Graph(ctx);
     var df = new Dragonfly(320, 420);
+
+    //Event Handler
+    $("#bt_about").click(showAboutMessage);
+    can.keydown(keyDown);
+    can.keyup(keyUp);
 
     var lap = 0;
     var exec = function() {
@@ -94,12 +106,5 @@ $(function() {
 
     setInterval(exec, 100);
 
-    var key_down = function(ev) {
-        if(ev.key == "d"){
-            console.log("asdf");
-        } else if(ev.key == "a") {
-            console.log("asdf");
-        }
-    }
-    $("#can").keydown(key_down);
+    
 });
