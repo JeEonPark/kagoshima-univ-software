@@ -75,13 +75,24 @@ $(function() {
         }
     }
 
+    var Apple = class {
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        draw(gra) {
+            
+        }
+    }
+
     //About Message
     var showAboutMessage = function() {
         alert("トンボゲーム\n2022\nSoftware Engineering II");
     }
 
     //When key down
-    var keyDown = function() {
+    var keyDown = function(ev) {
         switch(ev.which) {
             case 37: key_l = true; break;
             case 39: key_r = true; break;
@@ -89,7 +100,7 @@ $(function() {
     }
 
     //When key up
-    var keyUp = function() {
+    var keyUp = function(ev) {
         switch(ev.which) {
             case 37: key_l = false; break;
             case 39: key_r = false; break;
