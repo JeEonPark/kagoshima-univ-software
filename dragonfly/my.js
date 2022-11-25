@@ -82,7 +82,8 @@ $(function() {
         }
 
         draw(gra) {
-            
+            gra.ellipseS(this.x, this.y, 15, 15, 0);
+            gra.ellipseF(this.x+5, this.y-12, 10, 4, -45);
         }
     }
 
@@ -113,6 +114,7 @@ $(function() {
     var df = new Dragonfly(320, 420);
     var key_l = false;
     var key_r = false;
+    var app = new Apple(100, 100);
 
     //Event Handler
     $("#bt_about").click(showAboutMessage);
@@ -126,6 +128,7 @@ $(function() {
         if(key_l) df.move(-4);
         if(key_r) df.move(4);
         df.changeCostume();
+        app.draw(gra);
         lap++;
     }
 
