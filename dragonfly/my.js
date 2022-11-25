@@ -135,12 +135,13 @@ $(function() {
         df.draw(gra);
         if(key_l) df.move(-4);
         if(key_r) df.move(4);
-        df.changeCostume();
-        app.draw(gra);
+        if(lap%10==0) df.changeCostume();
+
         if(app==null && key_s) {
-            app = new Apple(df.x. df.y);
+            app = new Apple(df.x, df.y);
         }
         if(app!=null) {
+            app.draw(gra);
             if(app.move(-8)) {
                 app = null;
             }
