@@ -85,6 +85,11 @@ $(function() {
             gra.ellipseS(this.x, this.y, 15, 15, 0);
             gra.ellipseF(this.x+5, this.y-12, 10, 4, -45);
         }
+
+        move(dy) {
+            this.y += dy;
+            return this.y < -15;
+        }
     }
 
     //About Message
@@ -97,6 +102,7 @@ $(function() {
         switch(ev.which) {
             case 37: key_l = true; break;
             case 39: key_r = true; break;
+            case 32: key_s = true; break;
         }
     }
 
@@ -105,6 +111,7 @@ $(function() {
         switch(ev.which) {
             case 37: key_l = false; break;
             case 39: key_r = false; break;
+            case 32: key_s = false; break;
         }
     }
 
@@ -114,7 +121,8 @@ $(function() {
     var df = new Dragonfly(320, 420);
     var key_l = false;
     var key_r = false;
-    var app = new Apple(100, 100);
+    var key_s = false;
+    var app = null;
 
     //Event Handler
     $("#bt_about").click(showAboutMessage);
@@ -129,6 +137,14 @@ $(function() {
         if(key_r) df.move(4);
         df.changeCostume();
         app.draw(gra);
+        if(app==null && key_s) {
+            app = new Apple(df.x. df.y);
+        }
+        if(app!=null) {
+            if(app.move(-8)) {
+                app = null;
+            }
+        }
         lap++;
     }
 
