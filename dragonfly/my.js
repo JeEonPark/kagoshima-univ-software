@@ -92,6 +92,31 @@ $(function() {
         }
     }
 
+    var Banana = class {
+        constructor() {
+            this.x = Math.random()*640;
+            this.y = Math.random()*400;
+            this.tx = Math.random()*640;
+            this.ty = Math.random()*400;
+            this.cnt = parseInt(Math.random()*50)+30; //random 50 to 80
+            this.dx = Math.abs(this.x-this.tx)/this.cnt;
+            this.dy = Math.abs(this.y-this.ty)/this.cnt;
+        }
+
+        draw(gra) {
+            gra.ellipseS(this.x-10, this.y-10, 30, 10, -25);
+            gra.ellipseS(this.x, this.y, 30, 10, -45);
+            gra.ellipseS(this.x+10, this.y+10, 30, 10, -65);
+            gra.ellipseF(this.x+23, this.y-23, 20, 10, 45);
+        }
+
+        move() {
+            this.x += this.dx;
+            this.y += this.dy;
+            return Math.abs(this.x-this.dx) <= this.dx;
+        }
+    }
+
     //About Message
     var showAboutMessage = function() {
         alert("トンボゲーム\n2022\nSoftware Engineering II");
@@ -122,7 +147,8 @@ $(function() {
     var key_l = false;
     var key_r = false;
     var key_s = false;
-    var app = null;
+    var apps = [];
+    var bans = [];
 
     //Event Handler
     $("#bt_about").click(showAboutMessage);
@@ -130,6 +156,7 @@ $(function() {
     can.keyup(keyUp);
 
     var lap = 0;
+    var last_shot_time = 0;
     var exec = function() {
         gra.clear();
         df.draw(gra);
@@ -137,19 +164,41 @@ $(function() {
         if(key_r) df.move(4);
         if(lap%10==0) df.changeCostume();
 
-        if(app==null && key_s) {
-            app = new Apple(df.x, df.y);
+        //apple
+        if(last_shot_time > 5 && key_s) {
+            last_shot_time = 0;
+            console.log("asdf");
+            apps.push(new Apple(df.x, df.y));
         }
-        if(app!=null) {
-            app.draw(gra);
-            if(app.move(-8)) {
-                app = null;
+        apps.forEach((a, i) => {
+            a.draw(gra);
+            if(a.move(-8)) {
+                apps.splice(i, 1);
             }
+            bans.forEach((b, i2)=> {
+                if(Math.abs(b.x-a.x) < 30 && Math.abs(b.y-a.y) < 30) {
+                    bans.splice(i2, 1);
+                    apps.splice(i, 1);
+                }
+            });
+        });
+
+        //banana
+        if(lap%40==0 && Math.random()<0.5) {
+            bans.push(new Banana());
         }
+        bans.forEach((b, i)=>{
+            b.draw(gra);
+            if(b.move()){
+                bans.splice(i, 1);
+            }
+        });
+
         lap++;
+        last_shot_time++;
     }
 
     can.attr("tabindex", 0);
-    setInterval(exec, 100);
+    setInterval(exec, 30);
     
 });
