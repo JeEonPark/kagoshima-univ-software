@@ -88,7 +88,7 @@ $(function() {
 
         move(dy) {
             this.y += dy;
-            return this.y < -15;
+            return this.y < -15;    
         }
     }
 
@@ -111,9 +111,19 @@ $(function() {
         }
 
         move() {
-            this.x += this.dx;
-            this.y += this.dy;
-            return Math.abs(this.x-this.dx) <= this.dx;
+            if(this.x<this.tx) {
+                this.x += this.dx;
+            } else {
+                this.x -= this.dx;
+            }
+
+            if(this.y<this.ty) {
+                this.y += this.dy;
+            } else {
+                this.y -= this.dy;
+            }
+
+            return Math.abs(this.x-this.tx) < 10;
         }
     }
 
